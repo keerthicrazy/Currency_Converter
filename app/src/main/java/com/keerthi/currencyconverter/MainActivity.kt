@@ -89,9 +89,20 @@ class MainActivity : AppCompatActivity(), CurrencyListener {
     }
 
     fun refreshCurrency() {
-        srcCurrency = tv_src_currency.text.toString()
-        srcCurrencyValue = tv_src_currency_value.text.toString().toDouble()
-        viewModel.getCurrency(srcCurrency, srcCurrencyValue)
+
+        if (tv_src_currency_value.text != null && tv_src_currency_value.text!!.isNotEmpty()) {
+            srcCurrency = tv_src_currency.text.toString()
+            srcCurrencyValue = tv_src_currency_value.text.toString().toDouble()
+            viewModel.getCurrency(srcCurrency, srcCurrencyValue)
+        } else {
+            Toast.makeText(
+                this,
+                this.getString(R.string.please_enter_currency_amount),
+                Toast.LENGTH_LONG
+            )
+                .show();
+        }
+
     }
 
     override fun postCurrencyData(currencyData: ExchangeCurrency) {
